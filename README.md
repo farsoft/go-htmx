@@ -41,3 +41,33 @@ make dev
 
     E ajustar o path no .zshrc para reconhecer 
 ```
+
+## Colocando o Vite na jogada
+```
+pnpm init
+
+pnpm install vite --save-dev   
+pnpm install @vitejs/plugin-legacy --save-dev
+pnpm install alpinejs
+
+```
+
+```
+project/
+├── main.go
+├── templates/
+│   ├── layout.html
+│   ├── list.html
+│   ├── details.html
+│   ├── cart.html
+│   ├── checkout.html
+│   └── success.html
+├── public/  # Arquivos estáticos
+│   ├── index.html
+│   └── assets/
+│       └── styles.css
+├── src/
+│   ├── main.js
+│   └── app.js
+└── package.json
+```

@@ -40,7 +40,22 @@ func main() {
 	r := chi.NewRouter()
 	r.Use(middleware.Logger)
 
-	r.Get("/", listProductsHandler)
+	// Sirva os arquivos estáticos do Vite no modo produção
+	fs := http.FileServer(http.Dir("./dist"))
+	r.Handle("/assets/*", fs)
+
+	// Rotas padrão para a aplicação
+	// r.Get("/", func(w http.ResponseWriter, r *http.Request) {
+	// 	http.ServeFile(w, r, "templates/layout.html")
+	// })
+	r.Get("/*", func(w http.ResponseWriter, r *http.Request) {
+		http.ServeFile(w, r, "./dist/index.html")
+	})
+	// r.Get("/*", func(w http.ResponseWriter, r *http.Request) {
+	// 	http.Redirect(w, r, "http://localhost:3000"+r.URL.Path, http.StatusTemporaryRedirect)
+	// })
+	// r.Get("/", listProductsHandler)
+	r.Get("/products", listProductsHandler)
 	r.Get("/product/{id}", productDetailsHandler)
 	r.Post("/cart/add/{id}", addToCartHandler)
 	r.Get("/cart", viewCartHandler)
@@ -161,6 +176,15 @@ func viewCartHandler(w http.ResponseWriter, r *http.Request) {
 
 // checkoutHandler renders the checkout page without header and footer
 func checkoutHandler(w http.ResponseWriter, r *http.Request) {
+	if r.Method == http.MethodPost {
+		log.Println("Checkout concluído com sucesso")
+		w.Header().Set("HX-Trigger", "checkoutConcluido") // Dispara o evento para HTMX
+		w.WriteHeader(http.StatusOK)
+		w.Write([]byte("Pedido concluído com sucesso!"))
+		return
+	}
+
+	// Renderiza a página de checkout
 	renderPage(w, "templates/checkout.html", nil)
 }
 

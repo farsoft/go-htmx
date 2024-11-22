@@ -1,0 +1,21 @@
+{
+  "name": "chatgpt-html-template",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "serve": "vite preview"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@vitejs/plugin-legacy": "^5.4.3",
+    "vite": "^5.4.11"
+  },
+  "dependencies": {
+    "alpinejs": "^3.14.3"
+  }
+}
