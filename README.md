@@ -81,6 +81,43 @@ bun --version
 
 ## Estrutura de diretório
 ```
-
+├── bin
+├── dist
+│   ├── assets
+│   │   ├── index-<build>.css
+│   │   └── index-<build>.js
+│   └── index.html
+├── go.mod
+├── go.sum
+├── main.go
+├── Makefile
+├── README.md
+├── templates
+│   ├── cart.html
+│   ├── checkout.html
+│   ├── components
+│   │   ├── footer.html
+│   │   └── header.html
+│   ├── details.html
+│   ├── layout.html
+│   ├── list.html
+│   └── success.html
+├── tmp
+│   └── main
+└── web
+    ├── node_modules
+    ├── package.json
+    ├── pnpm-lock.yaml
+    ├── public
+    │   ├── index.html
+    │   └── static
+    │       ├── assets
+    │       │   └── styles.css
+    │       └── js
+    │           └── alpine.min.js
+    ├── src
+    │   └── main.js
+    ├── tailwind.config.js
+    └── vite.config.js
 ```
 
