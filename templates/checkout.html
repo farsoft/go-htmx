@@ -1,0 +1,28 @@
+{{define "content"}}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Checkout</title>
+    <script src="https://cdn.jsdelivr.net/npm/htmx.org"></script>
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body>
+    <div class="container mx-auto">
+        <h1 class="text-2xl font-bold">Checkout</h1>
+        <form>
+            <label>Nome:</label>
+            <input type="text" name="nome">
+            <label>Forma de Pagamento:</label>
+            <select name="pagamento">
+                <option>Boleto</option>
+                <option>Cartão de Crédito</option>
+                <option>Pix</option>
+            </select>
+            <button type="submit">Concluir</button>
+        </form>
+    </div>
+</body>
+</html>
+{{end}}

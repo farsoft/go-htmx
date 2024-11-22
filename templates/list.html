@@ -1,0 +1,31 @@
+{{define "content"}}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Product List</title>
+    <script src="https://cdn.jsdelivr.net/npm/htmx.org"></script>
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body>
+    <div class="container mx-auto">
+        <h1 class="text-2xl font-bold">Lista de Produtos</h1>
+        <ul>
+            {{range .}}
+            <li>
+                <h2>{{.Name}}</h2>
+                <p>{{.Description}}</p>
+                <p>Preço: {{.Price}}</p>
+                <a href="/product/{{.ID}}">Ver detalhes</a>
+                <form hx-post="/cart/add/{{.ID}}" hx-target="#mensagem-{{.ID}}" hx-swap="innerHTML" class="inline-block mt-2">
+                    <button type="submit">Adicionar ao Carrinho</button>
+                </form>
+                <div id="mensagem-{{.ID}}" class="mt-2 text-green-600"></div>
+            </li>
+            {{end}}
+        </ul>
+    </div>
+</body>
+</html>
+{{end}}

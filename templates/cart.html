@@ -1,0 +1,20 @@
+{{define "content"}}
+<section class="container mx-auto mt-8">
+    <h1 class="text-2xl font-bold text-center">Carrinho de Compras</h1>
+    <ul class="mt-4">
+        {{if .}}
+        {{range .}}
+        <li class="mb-4">
+            <h2 class="text-xl font-semibold">{{.Product.Name}}</h2>
+            <p>Quantidade: {{.Quantity}}</p>
+            <p>Preço Total: R$ {{printf "%.2f" (mul .Product.Price .Quantity)}}</p>
+        </li>
+        {{end}}
+        {{else}}
+        <p class="text-center mt-4">O carrinho está vazio.</p>
+        {{end}}
+    </ul>
+    <a href="/" class="inline-block mt-4 bg-gray-200 text-gray-800 px-4 py-2 rounded hover:bg-gray-300">Continuar Comprando</a>
+    <a href="/checkout" class="inline-block mt-4 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Finalizar Compra</a>
+</section>
+{{end}}
