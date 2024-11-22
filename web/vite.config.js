@@ -7,11 +7,11 @@ export default defineConfig({
         port: 3000, // Porta do servidor de desenvolvimento
     },
     build: {
-        outDir: '../dist', // Define a saída para a pasta "dist"
+        outDir: '../../dist', // Define a saída para a pasta "dist"
     },
     resolve: {
         alias: {
-            '/src': 'src', // Alias para facilitar importações
+            '/src': '/src', // Alias para facilitar importações
             // '/src': '/mnt/wsl/PHYSICALDRIVE4/estudos/golang-web/chatgpt-html-template/src',
         },
     },

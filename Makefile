@@ -1,5 +1,3 @@
-.PHONY: run dev help 
-
 # Desenvolvimento
 dev:
 	@air
@@ -27,6 +25,15 @@ clean:
 	@rm -f build-errors.log
 	@rm -f coverage.out
 
+vite: 
+	bun run vite ./web/public --port 3000	
+
+build-vite:
+	bun run vite build ./web/public	--config ./web/vite.config.js
+
+tailwindcss:
+	bun run tailwindcss --config ./web/tailwind.config.js -i ./web/public/assets/styles.css -o ./dist/css/styles.css	
+
 help:
 	@echo "Available commands:"
 	@echo "  make run          - Run the application in production mode with hot reload"
@@ -34,3 +41,6 @@ help:
 	@echo "  make build        - Build the application"
 	@echo "  make test         - Run tests"
 	@echo "  make clean        - Clean temporary files"
+	@echo "  make vite         - Run vite server"
+
+.PHONY: run dev build test test-coverage clean vite tailwindcss help 

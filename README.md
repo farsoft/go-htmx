@@ -52,22 +52,35 @@ pnpm install alpinejs
 
 ```
 
+## Instalar o Vite
+
 ```
-project/
-├── main.go
-├── templates/
-│   ├── layout.html
-│   ├── list.html
-│   ├── details.html
-│   ├── cart.html
-│   ├── checkout.html
-│   └── success.html
-├── public/  # Arquivos estáticos
-│   ├── index.html
-│   └── assets/
-│       └── styles.css
-├── src/
-│   ├── main.js
-│   └── app.js
-└── package.json
+pnpm i -g vite
 ```
+
+## Instalar o bun
+
+```
+- Arch Linux:
+  yay -S bun-bin
+
+  bun --version  
+
+- Ubuntu:
+curl -fsSL https://bun.sh/install | bash
+
+export PATH="$HOME/.bun/bin:$PATH"
+
+source ~/.bashrc
+# ou
+source ~/.zshrc
+
+bun --version
+```
+
+
+## Estrutura de diretório
+```
+
+```
+

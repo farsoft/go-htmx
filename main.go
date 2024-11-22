@@ -41,20 +41,13 @@ func main() {
 	r.Use(middleware.Logger)
 
 	// Sirva os arquivos estáticos do Vite no modo produção
-	fs := http.FileServer(http.Dir("./dist"))
-	r.Handle("/assets/*", fs)
+	// fs := http.FileServer(http.Dir("./dist"))
+	// r.Handle("/assets/*", fs)
 
-	// Rotas padrão para a aplicação
-	// r.Get("/", func(w http.ResponseWriter, r *http.Request) {
-	// 	http.ServeFile(w, r, "templates/layout.html")
-	// })
-	// r.Get("/*", func(w http.ResponseWriter, r *http.Request) {
-	// 	http.ServeFile(w, r, "./dist/index.html")
-	// })
-	// r.Get("/*", func(w http.ResponseWriter, r *http.Request) {
-	// 	http.Redirect(w, r, "http://localhost:3000"+r.URL.Path, http.StatusTemporaryRedirect)
-	// })
-	// r.Get("/", listProductsHandler)
+	// Servir arquivos estáticos da pasta "public"
+	fileServer := http.FileServer(http.Dir("./web/public"))
+	r.Handle("/src/*", fileServer)
+	r.Handle("/assets/*", fileServer)
 
 	// Rota para a página inicial que renderiza o layout com a lista de produtos
 	r.Get("/", func(w http.ResponseWriter, r *http.Request) {
@@ -67,6 +60,9 @@ func main() {
 	r.Get("/cart", viewCartHandler)
 	r.Get("/checkout", checkoutHandler)
 	r.Get("/success", successHandler)
+
+	r.Post("/checkout", checkoutHandler) // Rota para processar o checkout
+	r.Get("/success", successHandler)    // Rota para a página de sucesso
 
 	fmt.Println("Server running on port 8080")
 	http.ListenAndServe(":8080", r)
@@ -190,9 +186,14 @@ func viewCartHandler(w http.ResponseWriter, r *http.Request) {
 func checkoutHandler(w http.ResponseWriter, r *http.Request) {
 	if r.Method == http.MethodPost {
 		log.Println("Checkout concluído com sucesso")
-		w.Header().Set("HX-Trigger", "checkoutConcluido") // Dispara o evento para HTMX
+		// w.Header().Set("HX-Trigger", "checkoutConcluido") // Dispara o evento para HTMX
+		// w.WriteHeader(http.StatusOK)
+		// w.Write([]byte("Pedido concluído com sucesso!"))
+
+		// Retorna o redirecionamento HTMX
+		w.Header().Set("HX-Redirect", "/success")
 		w.WriteHeader(http.StatusOK)
-		w.Write([]byte("Pedido concluído com sucesso!"))
+
 		return
 	}
 

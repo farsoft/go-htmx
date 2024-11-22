@@ -8,17 +8,22 @@
 
     <!-- TailwindCSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-
+    
     <!-- HTMX -->
     <script src="https://cdn.jsdelivr.net/npm/htmx.org"></script>
+    
+    <!-- Estilos adicionais (se necessários) -->
+    <link rel="stylesheet" href="/assets/styles.css">   
+    
+    <!-- JavaScript do Vite -->
+    <!-- <script type="module" src="./src/main.js"></script> -->
+    <script defer src="/static/js/alpine.min.js"></script>
 
-    <!-- JavaScript da aplicação -->
-    <script type="module" src="/src/main.js"></script>
+
 </head>
 <body class="bg-gray-100">
     <!-- Cabeçalho -->
-    {{template "header" .}}
-
+    {{template "header" .}}    
     <!-- Conteúdo dinâmico -->
     <div id="content" class="container mx-auto p-4">
         {{block "content" .}}{{end}}
