@@ -7,9 +7,9 @@
                 <h2>{{.Name}}</h2>
                 <p>{{.Description}}</p>
                 <p>Preço: {{.Price}}</p>
-                <a href="/product/{{.ID}}">Ver detalhes</a>
+                 <a href="/product/{{.ID}}" class="bg-blue-600 text-white px-4 py-2 rounded" hx-get="/product/{{.ID}}" hx-target="#content" hx-swap="innerHTML">Ver detalhes</a>
                 <form hx-post="/cart/add/{{.ID}}" hx-target="#mensagem-{{.ID}}" hx-swap="innerHTML" class="inline-block mt-2">
-                    <button type="submit">Adicionar ao Carrinho</button>
+                    <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded">Adicionar</button>
                 </form>
                 <div id="mensagem-{{.ID}}" class="mt-2 text-green-600"></div>
             </li>

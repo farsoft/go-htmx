@@ -48,13 +48,19 @@ func main() {
 	// r.Get("/", func(w http.ResponseWriter, r *http.Request) {
 	// 	http.ServeFile(w, r, "templates/layout.html")
 	// })
-	r.Get("/*", func(w http.ResponseWriter, r *http.Request) {
-		http.ServeFile(w, r, "./dist/index.html")
-	})
+	// r.Get("/*", func(w http.ResponseWriter, r *http.Request) {
+	// 	http.ServeFile(w, r, "./dist/index.html")
+	// })
 	// r.Get("/*", func(w http.ResponseWriter, r *http.Request) {
 	// 	http.Redirect(w, r, "http://localhost:3000"+r.URL.Path, http.StatusTemporaryRedirect)
 	// })
 	// r.Get("/", listProductsHandler)
+
+	// Rota para a página inicial que renderiza o layout com a lista de produtos
+	r.Get("/", func(w http.ResponseWriter, r *http.Request) {
+		renderPage(w, "templates/list.html", products)
+	})
+
 	r.Get("/products", listProductsHandler)
 	r.Get("/product/{id}", productDetailsHandler)
 	r.Post("/cart/add/{id}", addToCartHandler)
@@ -74,33 +80,39 @@ func listProductsHandler(w http.ResponseWriter, r *http.Request) {
 
 // productDetailsHandler renders the product details page with header and footer
 func productDetailsHandler(w http.ResponseWriter, r *http.Request) {
-	log.Println("Rota /product/{id} chamada para detalhes do produto")
-
-	// Captura o ID como string da URL
 	idStr := chi.URLParam(r, "id")
-
-	// Converte o ID capturado para inteiro
+	// Converte o ID para inteiro
 	id, err := strconv.Atoi(idStr)
 	if err != nil {
-		log.Println("Erro ao converter ID:", err)
-		http.Error(w, "ID do produto inválido", http.StatusBadRequest)
+		http.Error(w, "ID inválido", http.StatusBadRequest)
 		return
 	}
 
-	// Procura o produto correspondente ao ID
+	// Procura pelo produto correspondente
+	var selectedProduct *Product
 	for _, product := range products {
-		log.Println("Verificando produto com ID:", product.ID)
 		if product.ID == id {
-			log.Println("Produto encontrado:", product.Name)
-			// Renderiza a página de detalhes do produto
-			renderPage(w, "templates/details.html", product)
-			return
+			selectedProduct = &product
+			break
 		}
 	}
 
-	// Caso nenhum produto seja encontrado, retorna 404
-	log.Println("Produto não encontrado para o ID:", id)
-	http.NotFound(w, r)
+	if selectedProduct == nil {
+		http.NotFound(w, r)
+		return
+	}
+
+	// Renderiza os detalhes do produto apenas no bloco "content"
+	tmpl, err := template.ParseFiles("templates/details.html")
+	if err != nil {
+		http.Error(w, "Erro ao carregar template: "+err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	err = tmpl.ExecuteTemplate(w, "content", selectedProduct)
+	if err != nil {
+		http.Error(w, "Erro ao renderizar template: "+err.Error(), http.StatusInternalServerError)
+	}
 }
 
 // addToCartHandler adds a product to the cart
